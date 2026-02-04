@@ -184,7 +184,7 @@ function drawBeads() {
   const today = getToday();
 
   if (!TEST_MODE && localStorage.getItem("lastDrawDate") === today) {
-    alert("오늘의 비즈는 이미 뽑았어요!\n자정 이후 다시 뽑을 수 있어요.");
+    alert("오늘의 코코아는 이제 그만! 내일 또 마셔봐요.");
     return;
   }
 
@@ -216,6 +216,17 @@ function drawBeads() {
     void img.offsetWidth;
     img.classList.add("pop");
   }, 1200);
+}
+    // 페이지 로드시: 오늘 이미 뽑았으면 자동 표시
+  window.onload = function () {
+    const today = getToday();
+    const savedDate = localStorage.getItem("lastDrawDate");
+    const savedImg = localStorage.getItem("lastDrawImg");
+
+    if (!TEST_MODE && savedDate === today && savedImg) {
+  showResult(savedImg);
+  document.getElementById("notice").innerText =
+    "오늘의 코코아 운세는?";
 }
     function updateDateInfo() {
   document.getElementById("todayText").innerText =
