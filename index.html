@@ -158,28 +158,29 @@
     }
   ];
 
-  function drawBeads() {
-    const today = getToday();
+function drawBeads() {
+  const today = getToday();
 
-    if (!TEST_MODE && localStorage.getItem("lastDrawDate") === today) {
-      alert("코코아는 이제 그만! 내일 다시 마셔요.");
-      return;
-    }
+  if (!TEST_MODE && localStorage.getItem("lastDrawDate") === today) {
+    alert("오늘의 비즈는 이미 뽑았어요!\n자정 이후 다시 뽑을 수 있어요.");
+    return;
+  }
 
-    if (!TEST_MODE) {
-      localStorage.setItem("lastDrawDate", today);
-    }
+  if (!TEST_MODE) {
+    localStorage.setItem("lastDrawDate", today);
+  }
 
-    const box = document.getElementById("resultBox");
-    const img = document.getElementById("resultImage");
-    const text = document.getElementById("resultText");
+  const box = document.getElementById("resultBox");
+  const img = document.getElementById("resultImage");
+  const text = document.getElementById("resultText");
+  const drawImg = document.getElementById("drawImage");
 
-    box.style.display = "block";
-    img.src = "";
-    text.innerText = "";
+  box.style.display = "block";
+  img.src = "";
+  text.innerText = "";
 
-    /* 두근두근 연출 */
-drawImg.classList.add("waiting");
+  /* 💓 두근두근 시작 */
+  drawImg.classList.add("waiting");
 
   setTimeout(() => {
     drawImg.classList.remove("waiting");
@@ -193,7 +194,8 @@ drawImg.classList.add("waiting");
     void img.offsetWidth;
     img.classList.add("pop");
   }, 1200);
-  }
+}
+
 </script>
 
 </body>
