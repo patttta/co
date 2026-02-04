@@ -31,20 +31,17 @@
     width: 100%;
   }
 
-  /* 결과 영역 */
   .result {
     display: none;
     margin-top: 30px;
   }
 
   .image-box {
-    position: relative;
     width: 100%;
     height: 260px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
   }
 
   .image-box img {
@@ -67,7 +64,7 @@
     color: #8D7860;
   }
 
-  /* 두근두근 대기 애니메이션 */
+  /* 두근두근 */
   @keyframes heartbeat {
     0% { transform: scale(1); }
     25% { transform: scale(1.05); }
@@ -81,7 +78,7 @@
     opacity: 0.7;
   }
 
-  /* 결과 팝 애니메이션 */
+  /* 팝 */
   @keyframes pop {
     0% { opacity: 0; transform: scale(0.85); }
     60% { opacity: 1; transform: scale(1.05); }
@@ -100,27 +97,28 @@
 
   <!-- 로고 -->
   <div class="logo-wrap">
-    <img id="logoImage"
-     src="https://i.imgur.com/rYcxn0Z.png"
-     alt="퐁모코 로고"
-     onclick="location.reload()">
-
+    <img src="https://i.imgur.com/rYcxn0Z.png"
+         alt="퐁모코 로고"
+         onclick="location.reload()">
   </div>
-<div id="dateInfo" style="margin-bottom:20px; color:#8D7860; font-size:14px;">
-  <div id="todayText"></div>
-  <div id="countdownText"></div>
-</div>
-  <!-- 클릭용 타이틀 이미지 -->
-<div class="title-image" onclick="drawBeads()">
-  <img id="drawImage"
-       src="https://i.imgur.com/D4nCoQW.png"
-       alt="코코아 운세">
-</div>
+
+  <!-- 날짜 / 카운트다운 -->
+  <div id="dateInfo" style="margin-bottom:20px; color:#8D7860; font-size:14px;">
+    <div id="todayText"></div>
+    <div id="countdownText"></div>
+  </div>
+
+  <!-- 클릭 이미지 -->
+  <div class="title-image" onclick="drawCocoa()">
+    <img id="drawImage"
+         src="https://i.imgur.com/D4nCoQW.png"
+         alt="코코아 운세">
+  </div>
 
   <!-- 결과 -->
   <div class="result" id="resultBox">
     <div class="image-box">
-      <img id="resultImage" src="">
+      <img id="resultImage">
     </div>
     <div class="result-text" id="resultText"></div>
   </div>
@@ -132,111 +130,89 @@
 </div>
 
 <script>
-  const TEST_MODE = false; // 테스트 끝나면 false로
+  const TEST_MODE = true; // 테스트 중이면 true
 
-  function formatToday() {
-  const d = new Date();
-  return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
-}
-
-function getTimeUntilMidnight() {
-  const now = new Date();
-  const midnight = new Date();
-  midnight.setHours(24, 0, 0, 0);
-
-  const diff = midnight - now;
-
-  const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, "0");
-  const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, "0");
-  const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
-
-  return `${hours}:${minutes}:${seconds}`;
-}
+  const items = [
+    { img: "https://i.imgur.com/bVvaxfi.png", text: "도토리 1톨!" },
+    { img: "https://i.imgur.com/p635FDn.png", text: "도토리 2톨!!" },
+    { img: "https://i.imgur.com/DfojvDj.png", text: "도토리 3톨!!!" },
+    { img: "https://i.imgur.com/a1yOTmV.png", text: "꽝!!!!" }
+  ];
 
   function getToday() {
     const d = new Date();
-    return d.getFullYear() + "-" +
-      String(d.getMonth() + 1).padStart(2, "0") + "-" +
-      String(d.getDate()).padStart(2, "0");
+    return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
   }
 
-  /* 🔹 이미지 + 문구 세트 (4개) */
-  const items = [
-    {
-      img: "https://i.imgur.com/bVvaxfi.png",
-      text: "도토리 1톨!"
-    },
-    {
-      img: "https://i.imgur.com/p635FDn.png",
-      text: "도토리 2톨!!"
-    },
-    {
-      img: "https://i.imgur.com/DfojvDj.png",
-      text: "도토리 3톨!!!"
-    },
-    {
-      img: "https://i.imgur.com/a1yOTmV.png",
-      text: "꽝!!!!"
-    }
-  ];
-
-function drawBeads() {
-  const today = getToday();
-
-  if (!TEST_MODE && localStorage.getItem("lastDrawDate") === today) {
-    alert("오늘의 코코아는 이제 그만! 내일 또 마셔봐요.");
-    return;
+  function formatToday() {
+    const d = new Date();
+    return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일`;
   }
 
-  if (!TEST_MODE) {
-    localStorage.setItem("lastDrawDate", today);
+  function getTimeUntilMidnight() {
+    const now = new Date();
+    const midnight = new Date();
+    midnight.setHours(24,0,0,0);
+    const diff = midnight - now;
+    const h = String(Math.floor(diff/3600000)).padStart(2,"0");
+    const m = String(Math.floor(diff/60000)%60).padStart(2,"0");
+    const s = String(Math.floor(diff/1000)%60).padStart(2,"0");
+    return `${h}:${m}:${s}`;
   }
 
-  const box = document.getElementById("resultBox");
-  const img = document.getElementById("resultImage");
-  const text = document.getElementById("resultText");
-  const drawImg = document.getElementById("drawImage");
+  function showResult(imgSrc, text) {
+    document.getElementById("resultImage").src = imgSrc;
+    document.getElementById("resultText").innerText = text;
+    document.getElementById("resultBox").style.display = "block";
+  }
 
-  box.style.display = "block";
-  img.src = "";
-  text.innerText = "";
-
-  /* 💓 두근두근 시작 */
-  drawImg.classList.add("waiting");
-
-  setTimeout(() => {
-    drawImg.classList.remove("waiting");
-
-    const result = items[Math.floor(Math.random() * items.length)];
-
-    img.src = result.img;
-    text.innerText = result.text;
-
-    img.classList.remove("pop");
-    void img.offsetWidth;
-    img.classList.add("pop");
-  }, 1200);
-}
-    // 페이지 로드시: 오늘 이미 뽑았으면 자동 표시
-  window.onload = function () {
+  function drawCocoa() {
     const today = getToday();
-    const savedDate = localStorage.getItem("lastDrawDate");
-    const savedImg = localStorage.getItem("lastDrawImg");
 
-    if (!TEST_MODE && savedDate === today && savedImg) {
-  showResult(savedImg);
-  document.getElementById("notice").innerText =
-    "오늘의 코코아 운세는?";
-}
-    function updateDateInfo() {
-  document.getElementById("todayText").innerText =
-    `오늘 날짜 · ${formatToday()}`;
+    if (!TEST_MODE && localStorage.getItem("lastDrawDate") === today) {
+      alert("오늘의 코코아는 이제 그만☕\n내일 다시 와주세요!");
+      return;
+    }
 
-  document.getElementById("countdownText").innerText =
-    `다음 코코아까지 남은 시간 · ${getTimeUntilMidnight()}`;
-}
-updateDateInfo();
-setInterval(updateDateInfo, 1000);
+    const drawImg = document.getElementById("drawImage");
+    drawImg.classList.add("waiting");
+
+    setTimeout(() => {
+      drawImg.classList.remove("waiting");
+
+      const result = items[Math.floor(Math.random() * items.length)];
+
+      showResult(result.img, result.text);
+
+      const img = document.getElementById("resultImage");
+      img.classList.add("pop");
+
+      if (!TEST_MODE) {
+        localStorage.setItem("lastDrawDate", today);
+        localStorage.setItem("lastDrawImg", result.img);
+        localStorage.setItem("lastDrawText", result.text);
+      }
+    }, 1200);
+  }
+
+  function updateDateInfo() {
+    document.getElementById("todayText").innerText =
+      `오늘 날짜 · ${formatToday()}`;
+    document.getElementById("countdownText").innerText =
+      `다음 코코아까지 · ${getTimeUntilMidnight()}`;
+  }
+
+  window.onload = function () {
+    updateDateInfo();
+    setInterval(updateDateInfo, 1000);
+
+    if (!TEST_MODE && localStorage.getItem("lastDrawDate") === getToday()) {
+      showResult(
+        localStorage.getItem("lastDrawImg"),
+        localStorage.getItem("lastDrawText")
+      );
+    }
+  };
 </script>
 
 </body>
