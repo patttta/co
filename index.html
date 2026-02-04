@@ -106,7 +106,10 @@
      onclick="location.reload()">
 
   </div>
-
+<div id="dateInfo" style="margin-bottom:20px; color:#8D7860; font-size:14px;">
+  <div id="todayText"></div>
+  <div id="countdownText"></div>
+</div>
   <!-- 클릭용 타이틀 이미지 -->
 <div class="title-image" onclick="drawBeads()">
   <img id="drawImage"
@@ -130,6 +133,25 @@
 
 <script>
   const TEST_MODE = true; // 테스트 끝나면 false로
+
+  function formatToday() {
+  const d = new Date();
+  return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
+}
+
+function getTimeUntilMidnight() {
+  const now = new Date();
+  const midnight = new Date();
+  midnight.setHours(24, 0, 0, 0);
+
+  const diff = midnight - now;
+
+  const hours = String(Math.floor(diff / (1000 * 60 * 60))).padStart(2, "0");
+  const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, "0");
+  const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
+
+  return `${hours}:${minutes}:${seconds}`;
+}
 
   function getToday() {
     const d = new Date();
@@ -194,6 +216,13 @@ function drawBeads() {
     void img.offsetWidth;
     img.classList.add("pop");
   }, 1200);
+}
+    function updateDateInfo() {
+  document.getElementById("todayText").innerText =
+    `오늘 날짜 · ${formatToday()}`;
+
+  document.getElementById("countdownText").innerText =
+    `다음 코코아까지 남은 시간 · ${getTimeUntilMidnight()}`;
 }
 
 </script>
