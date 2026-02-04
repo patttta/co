@@ -224,7 +224,8 @@ function drawBeads() {
   document.getElementById("countdownText").innerText =
     `다음 코코아까지 남은 시간 · ${getTimeUntilMidnight()}`;
 }
-
+updateDateInfo();
+setInterval(updateDateInfo, 1000);
 </script>
 
 </body>
