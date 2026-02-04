@@ -100,7 +100,11 @@
 
   <!-- 로고 -->
   <div class="logo-wrap">
-    <img src="https://i.imgur.com/rYcxn0Z.png" alt="퐁모코 로고" onclick="location.reload()">
+    <img id="logoImage"
+     src="https://i.imgur.com/rYcxn0Z.png"
+     alt="퐁모코 로고"
+     onclick="location.reload()">
+
   </div>
 
   <!-- 클릭용 타이틀 이미지 -->
@@ -173,10 +177,13 @@
     text.innerText = "";
 
     /* 두근두근 연출 */
-    img.classList.add("waiting");
+   const logo = document.getElementById("logoImage");
 
-    setTimeout(() => {
-      img.classList.remove("waiting");
+logo.classList.add("waiting");
+
+setTimeout(() => {
+  logo.classList.remove("waiting");
+
 
       const result = items[Math.floor(Math.random() * items.length)];
 
