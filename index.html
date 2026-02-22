@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>퐁모코 커피 운세</title>
+<title>퐁모코 코코아 운세</title>
 
 <style>
   body {
@@ -133,9 +133,9 @@
   const TEST_MODE = false; // 테스트 중이면 true
 
   const items = [
-    { img: "https://i.imgur.com/bVvaxfi.png", text: "오늘의 커피 운세는?\n도토리 1톨!" },
-    { img: "https://i.imgur.com/p635FDn.png", text: "오늘의 커피 운세는?\n도토리 2톨!!" },
-    { img: "https://i.imgur.com/DfojvDj.png", text: "오늘의 커피 운세는?\n도토리 3톨!!!" },
+    { img: "https://i.imgur.com/bVvaxfi.png", text: "오늘의 코코아 운세는?\n도토리 1톨!" },
+    { img: "https://i.imgur.com/p635FDn.png", text: "오늘의 코코아 운세는?\n도토리 2톨!!" },
+    { img: "https://i.imgur.com/DfojvDj.png", text: "오늘의 코코아 운세는?\n도토리 3톨!!!" },
     { img: "https://i.imgur.com/a1yOTmV.png", text: "꽝!!!!" }
   ];
 
@@ -170,7 +170,7 @@
     const today = getToday();
 
     if (!TEST_MODE && localStorage.getItem("lastDrawDate") === today) {
-      alert("오늘의 커피는 이제 그만☕\n내일 다시 와주세요!");
+      alert("오늘의 코코아는 이제 그만☕\n내일 다시 와주세요!");
       return;
     }
 
@@ -199,7 +199,7 @@
     document.getElementById("todayText").innerText =
       `오늘 날짜 · ${formatToday()}`;
     document.getElementById("countdownText").innerText =
-      `다음 커피까지 남은 시간 · ${getTimeUntilMidnight()}`;
+      `다음 코코아까지 남은 시간 · ${getTimeUntilMidnight()}`;
   }
 
   window.onload = function () {
